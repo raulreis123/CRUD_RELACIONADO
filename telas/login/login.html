@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="../functions/hashFunc.js" type="module"></script> -->
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="#">
+    <link rel="icon" type="image" href="images/hamb.jpg" class="iconab">
+    <title>login</title>
+</head>
+<body>
+
+    <div class="controle1">
+        <div class="title">Login</div>
+
+        <div class="texts">
+            <input type="text" placeholder="Email..." size="25" class="text" id="textEmail" onkeyup="veri()"><h4 class="warn">Email invalido!</h4>
+            <input type="password" placeholder="Senha..." size="25" class="text" id="pass"><p></p>
+            <input type="checkbox" id="chbox" onclick="chbx()">Mostrar senha
+        </div>
+
+        <div class="texts1">
+            <p id="msg2"></p>
+            <h3>Entre com sua conta google!</h3>
+        </div>
+        
+        <div class="buttons">
+            <input type="button" value="Cadastrar" class="button" style="background-color: #17191c;" onclick="cadRouter()">
+            <input type="button" value="Entrar" class="button" style="background-color: #3560a7;" onclick="valid()">
+        </div>
+    </div>
+</body>
+</html>

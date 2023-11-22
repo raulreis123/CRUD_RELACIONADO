@@ -1,0 +1,40 @@
+.prCtrl{
+    position: absolute;
+    text-align: center;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 88%;
+    /* background-color: #baad6c; */
+    overflow: auto;
+}
+
+.titleText{
+    font-size: 25px;
+}
+
+.inTiTy{
+    position: relative;
+    width: 100%;
+}
+
+.inTiTy input[type="text"]{
+    width: 40%;
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+.inTiTy select{
+    width: 30%;
+}
+
+.submitData input{
+    height: 45px;
+    width: 150px;
+    font-size: 25px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #3560a7;
+    color: white;
+}

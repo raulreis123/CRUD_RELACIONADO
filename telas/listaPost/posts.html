@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Postagens</title>
+</head>
+<body>
+    <h1>Listagem de Postagens</h1>
+    <button class="update" onclick="getPost()">Update</button>
+    <section class="container">
+    </section>
+    <section class="containerConfirm">
+        <p>Tem certeza que deseja excluir este usuário?</p>
+        <button class="btnCon" id="fsBt">Não</button>
+        <button class="btnCon" id="trBt">Excluir</button>
+    </section>
+    <section class="containerEdit">
+        <p>Escolha o que deseja editar</p>
+        <input type="text" class="sendObj" placeholder="Nome...">
+        <input type="password" class="sendObj" placeholder="Senha..."><br><br>
+        <button class="btnCon" id="fsBt1">Cancelar</button>
+        <button class="btnCon" id="trBt1">Enviar</button>
+    </section>
+</body>
+</html>

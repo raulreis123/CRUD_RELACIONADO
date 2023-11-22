@@ -1,0 +1,68 @@
+body{
+    background-color: #ede4e4;
+}
+
+.controle{
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    height: 500px;
+    width: 450px;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.title{
+    position: absolute;
+    left: 50%;
+    top: 7%;
+    transform: translateX(-50%);
+    height: 50px;
+    width: 320px;
+    background-color: #3e4042;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    color: white;
+    font-size: 35px;
+}
+
+.inputs{
+    position: relative;
+    top: 70px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: 16px;
+    width: 300px;
+    outline: none;
+}
+
+input[type='checkbox']{
+    position: absolute;
+    top: 320px;
+    left: 70px;
+}
+
+label{
+    position: absolute;
+    top: 64.2%;
+    left: 21%;
+}
+
+button{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 45px;
+    width: 150px;
+    font-size: 25px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #3560a7;
+    color: white;
+    cursor: pointer;
+}

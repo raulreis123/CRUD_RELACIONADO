@@ -1,0 +1,49 @@
+body{
+    text-align: center;
+    background-color: #ede4e4;
+}
+
+.update{
+    position: absolute;
+    display: flex;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    column-gap: 55px;
+}
+
+.container{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 75%;
+    display: block;
+    background-color: white;
+    overflow: auto;
+    text-align: left;
+}
+
+/* Elementos gerados no JavaScript */
+.containerPost{
+    position: relative;
+    width: 100%;
+    margin-top: 18px;
+}
+
+.title{
+    position: relative;
+    left: 20px;
+    font-size: 20px;
+}
+
+.tipoMd{
+    position: relative;
+    left: 25px;
+    font-size: 12px;
+}
+
+.btnEx{
+    position: absolute;
+    right: 5%;
+}

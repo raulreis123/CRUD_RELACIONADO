@@ -1,0 +1,106 @@
+body{
+    text-align: center;
+    background-color: #ede4e4;
+}
+
+.btnEmails{
+    position: absolute;
+    display: flex;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    column-gap: 55px;
+}
+
+.container{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 75%;
+    background-color: white;
+    overflow: auto;
+    text-align: left;
+}
+
+.cntrEmails{
+    position: relative;
+    left: 30px;
+    top: -5px;
+    display: inline-flex;
+    border-color: black;
+    z-index: 0;
+}
+
+.ctnBtn{
+    position: relative;
+    top: 9px;
+}
+
+.btnEx{
+    position:absolute;
+    right: 20px;
+    background-color: red;
+    font-size: 17px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.btnUp{
+    position:absolute;
+    right: 90px;
+    background-color: #035afc;
+    font-size: 17px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.containerConfirm{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    height: 90px;
+    border-radius: 10px;
+    border: 1.8px solid black;
+    display: none;
+    background-color: white;
+}
+
+.btnCon{
+    font-size: 15px;
+    width: 100px;
+}
+
+.dispServer{
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 10%;
+    color: white;
+    background-color: black;
+    font-size: 20px;
+    display: block;
+}
+
+.containerEdit{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    height: 125px;
+    border-radius: 10px;
+    border: 1.8px solid black;
+    display: none;
+    background-color: white;
+}

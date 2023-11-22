@@ -1,0 +1,226 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: #3e4042;
+}
+
+.btnList{
+    position: relative;
+    top: 2px;
+    left: 20px;
+    font-size: 45px;
+    color: white;
+    background-color: #baad6c;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.menuLateral{
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 200px;
+    height: 0px;
+    border-bottom-right-radius: 15px;
+    background-color: #3e4042;
+    overflow: auto;
+    transition: all 1.5s ease-in-out;
+}
+
+.pMl{
+    position: relative;
+    left: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.categorias{
+    position: relative;
+    top: -18px;
+    left: 40px;
+    color: white;
+    overflow: hidden;
+    height: 0px;
+    transition: all 1s ease-in-out;
+}
+
+.categorias label{
+    cursor: pointer;
+    display: list-item;
+}
+
+.imgLogo{
+    position: relative;
+    top: -10px;
+    height: 80px;
+}
+
+body{
+    text-align: center;
+}
+
+.imgUser{
+    position: absolute;
+    top: 1.5px;
+    width: 67px;
+    right: 30px;
+    border-radius: 50%;
+}
+
+.userMain{
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    width: 150px;
+    height: 0px;
+    background-color: #3e4042;    
+    color: white;
+    border-bottom-left-radius: 15px;
+    /* display: none; */
+    overflow: hidden;
+    transition: all 2s ease-out;
+    z-index: 2;
+}
+
+a{
+    text-decoration: none;
+}
+.exData{
+    position: relative;
+    color: white;
+    left: 15px;
+    cursor: pointer;
+}
+
+.showUser{
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 300px;
+    display: none;
+    background-color: #3e4042;
+    border-radius: 15px;
+    z-index: 2;
+    color: white;
+}
+
+.showData{
+    background-color: #3e4042;
+    border: none;
+    color: white;
+    font-size: 20px;
+}
+
+.styleP{
+    position: relative;
+    left: 30px;
+    top: 60px;
+}
+
+.titleData{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 30px;
+}
+
+.imgEyeslash{
+    position: relative;
+    height: 15px;
+    left: 40px;
+    top: 30px;
+    cursor: pointer;
+}
+
+.containerConPass{
+    position: relative;
+    display: flex;
+    top: 30px;
+    left: 30px;
+}
+
+.confirmPass{
+    display: none;
+}
+
+.btnConPass{
+    display: none;
+}
+
+.upUser{
+    position: absolute;
+    top: 160%;
+    left: 50%;
+    height: 300px;
+    width: 500px;
+    transform: translateX(-50%);
+    border-radius: 15px;
+    display: none;
+    text-align: center;
+    background-color: #3e4042;
+    color: white;
+}
+
+.upUser label{
+    font-size: 30px;
+}
+
+.upUser input{
+    position: relative;
+    top: 50px;
+}
+
+.upUser div{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    column-gap: 30px;
+}
+
+.upUser button{
+    position: relative;
+    top: 90px;
+}
+
+.contVal{
+    position: relative;
+    top: 7px;
+    max-width: 1366px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    background-color: #baad6c;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+    overflow: auto;
+}
+
+.displayMidia{
+    position: relative;
+    width: 33.33%;
+    height: 200px;
+    display: block;
+}
+
+.displayMidia label{
+    position: relative;
+    top: 5px;
+    left: 10px;
+}
+
+.displayHeadMidia{
+    display: flex;
+}
+
+.titleCont{
+    font-size: 25px;
+}
