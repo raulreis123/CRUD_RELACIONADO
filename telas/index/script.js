@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', async() => {
     dataLSP = await getDataPost();
     dataLS = await getDataUser();
 
+    //console.log(dataLS);
+
     if(!localStorage.getItem('dataUser')){
         localStorage.setItem('dataUser', JSON.stringify(dataLS))
     }
@@ -77,13 +79,13 @@ document.addEventListener('DOMContentLoaded', async() => {
     let createAt = JSON.parse(localStorage.getItem('dataUser'));
     let createAtP = JSON.parse(localStorage.getItem('dataPost'));
 
-    if( createAt == null || createAt == undefined ){
+    if( createAt === null || createAt === undefined ){
         alert('Realize o login para acessar!');
         window.location.href = '../login/login.html';
     }
 
     dataUser = createAt;
-    console.log(dataUser);
+    console.log(createAt);
 
     responsePost = postGenerator(createAtP);
 
@@ -145,6 +147,7 @@ function showUser(){
     showData[0].value = dataUser.nome;
     showData[1].value = dataUser.email;
     showData[2].value = dataUser.password;
+    alert(showData)
     var cont = document.querySelector('.showUser');
     if (cont.style.display == 'block') {
         cont.style.display = 'none';
