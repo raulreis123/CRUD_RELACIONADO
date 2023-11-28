@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     let categories = objects[1];
     let myPost = objects[2];
     let editPer = objects[3];
-    console.log(createAt)
+    console.log(dataUser)
 
     //Filtro de categorias
     categories.addEventListener('click', ()=>{
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             if(isVisible){
                 if( computedStyle.display == 'block'  ){
                     if(Number(item.id) !== createAt.id ){
-                        console.log(item.id)
+                        //console.log(item.id)
                         item.style.display = 'none';
                     }
                 }
@@ -147,7 +147,7 @@ function showUser(){
     showData[0].value = dataUser.nome;
     showData[1].value = dataUser.email;
     showData[2].value = dataUser.password;
-    alert(showData)
+    //alert(showData)
     var cont = document.querySelector('.showUser');
     if (cont.style.display == 'block') {
         cont.style.display = 'none';
@@ -196,6 +196,7 @@ function menuLat(){
     } else { contBar.style.height = '300px'; }
 }
 
+//Direcionamento à aba de nova postagem
 function newPost(){
     window.location.href = '../postagem/post.html';
 }
@@ -204,6 +205,41 @@ async function testePost(){
     window.location.href = '../postagem/post.html';
 }
 
+//Mostrar informações 
+function showPost(postInfo){
+    let secMain = document.querySelector('.showPost');
+
+    let computedStyle = window.getComputedStyle(secMain);
+    let transform = computedStyle.getPropertyValue('transform');
+    let divMain = document.createElement('div');
+    let btn = document.createElement('button');
+    btn.textContent = 'Sair';
+    
+    btn.classList.add('postBtn');
+
+    divMain.appendChild(document.createElement('p')).textContent = postInfo.titulo;
+    divMain.appendChild(document.createElement('p')).textContent = `(${postInfo.tipo})`;
+    divMain.appendChild(document.createElement('p')).textContent = postInfo.conteudo;
+    divMain.appendChild(btn);
+
+    console.log(transform)
+    if( transform == 'matrix(1, 0, 0, 1, -1662.5, 0)'){
+        secMain.style.transform = 'translateX(-50%)';
+        secMain.appendChild(divMain);
+    } else { 
+        secMain.style.transform = 'translateX(-237.5%)';
+        secMain.textContent = '';
+    }
+
+    btn.addEventListener('click', ()=>{
+        secMain.style.transform = 'translateX(-237.5%)';
+        setTimeout(()=>{
+            secMain.textContent = '';
+        }, 2000)
+    })
+}
+
+//Gerador de posts
 function postGenerator(post){
     // console.log(post)
     const primarySec = document.querySelector('.contVal');
@@ -217,11 +253,28 @@ function postGenerator(post){
             let type = document.createElement('label');
             let conteudo = document.createElement('label');
     
-            type.textContent = '(' + item.tipo + ')';
+            type.textContent = `(${item.tipo})`;
             title.textContent = item.titulo;
-            if(item.conteudo.length > 170){
-                conteudo.textContent = item.conteudo.substring(0, 170) + '...';
-            } else{ conteudo.textContent = item.conteudo; }
+
+            if (item.conteudo.length > 170) {
+                let sizeCont = document.createElement('p');
+                sizeCont.textContent = 'Ver mais...';
+                sizeCont.style.cursor = 'pointer';
+                sizeCont.style.color = 'blue';
+            
+                sizeCont.addEventListener('click', ()=>{
+                    showPost(item);
+                });
+            
+                let conteudoCortado = document.createElement('span');
+                conteudoCortado.textContent = item.conteudo.substring(0, 170) + '...';
+                
+                conteudo.appendChild(conteudoCortado);
+                conteudo.appendChild(sizeCont);
+            } else {
+                conteudo.textContent = item.conteudo;
+            }
+            
     
             divCont.classList.add('displayMidia')
             divHead.classList.add('displayHeadMidia')

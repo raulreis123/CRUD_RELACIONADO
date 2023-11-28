@@ -206,7 +206,7 @@ a{
 
 .displayMidia{
     position: relative;
-    width: 33.33%;
+    width: 50%;
     height: 200px;
     display: block;
 }
@@ -214,7 +214,7 @@ a{
 .displayMidia label{
     position: relative;
     top: 5px;
-    left: 10px;
+    /* left: 10px; */
 }
 
 .displayHeadMidia{
@@ -223,4 +223,32 @@ a{
 
 .titleCont{
     font-size: 25px;
+}
+
+/* Seção de informações de postagens */
+.showPost{
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    transform: translateX(-237.5%);
+    z-index: 2;
+    height: 650%;
+    width: 700px;
+    background-color: #3e4042;
+    transition: all 2s ease-in-out;
+}
+
+.showPost p{
+    margin-top: 20px;
+    margin-left: 10px;
+    color: white;
+}
+
+.postBtn{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 60px;
+    border: none;
+    border-radius: 5px;
 }
