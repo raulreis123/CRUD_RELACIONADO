@@ -70,6 +70,18 @@ async function valid(){
     // console.log(/*receb[0].email*/Object.values(receb));
 }
 
+document.addEventListener('DOMContentLoaded', async()=>{
+    const eventClick = document.querySelector('.entrada');
+    const eventEnter = document.querySelector('.txtPass');
+
+    eventClick.addEventListener('click', valid);
+    eventEnter.addEventListener('keypress', async(e)=>{
+        if( e.key == 'Enter' ){
+            await valid();
+        }
+    });
+})
+
 function cadRouter(){
     window.location.href = '../cadastro/cadastro.html'
 }

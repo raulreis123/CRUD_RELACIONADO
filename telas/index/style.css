@@ -154,6 +154,8 @@ a{
     display: none;
 }
 
+
+/* Atualização de usuário. */
 .upUser{
     position: absolute;
     top: 160%;
@@ -251,4 +253,10 @@ a{
     width: 60px;
     border: none;
     border-radius: 5px;
+}
+
+.imagePost{
+    position: relative;
+    margin: auto;
+    border-radius: 10px;
 }

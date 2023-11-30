@@ -38,6 +38,12 @@ async function upUser(){
     }
 }
 
+function closeUpUser(){
+    let secMain = document.querySelector('.upUser');
+    //let computedStyle = window.getComputedStyle(secMain);
+    secMain.style.display = 'none';
+}
+
 //Pegar dados do usuário
 async function getDataUser(){
     try {
@@ -54,9 +60,10 @@ async function getDataPost(){
     try {
         let response = await axios.get(urlGetPost);
         let dados = response.data;
-        return dados.data;
+        console.log(dados)
+        return dados;
     } catch (error) {
-        alert('Erro no servidor!')
+        alert('Servidor indisponível!')
         console.error(error)
         window.location.reload(true);
     }
@@ -66,7 +73,9 @@ document.addEventListener('DOMContentLoaded', async() => {
     let dataLS;
     let dataLSP;
     dataLSP = await getDataPost();
+    console.log(dataLSP)
     dataLS = await getDataUser();
+    console.log(dataLS)
 
     //console.log(dataLS);
 
@@ -74,7 +83,8 @@ document.addEventListener('DOMContentLoaded', async() => {
         localStorage.setItem('dataUser', JSON.stringify(dataLS))
     }
 
-    localStorage.setItem('dataPost', JSON.stringify(dataLSP))
+    localStorage.setItem('dataPost', JSON.stringify(dataLSP));
+    //console.log(localStorage.getItem('dataPost'))
     
     let createAt = JSON.parse(localStorage.getItem('dataUser'));
     let createAtP = JSON.parse(localStorage.getItem('dataPost'));
@@ -201,14 +211,80 @@ function newPost(){
     window.location.href = '../postagem/post.html';
 }
 
-async function testePost(){
-    window.location.href = '../postagem/post.html';
+//Gerador de posts
+function postGenerator(post){
+    // console.log(post)
+    const primarySec = document.querySelector('.contVal');
+    let divContArray = [];
+
+    if(Array.isArray(post)){
+        post.forEach(item => {
+            //console.log(item)
+            let divCont = document.createElement('div');
+            let divHead = document.createElement('div');
+            let title = document.createElement('label');
+            let type = document.createElement('label');
+            let imagePost = document.createElement('img');
+            let imageURL = 'data:image/png;base64,' + item.imagem;
+            imagePost.src = imageURL;
+            let conteudo = document.createElement('label');
+            let separ = document.createElement('br');
+    
+            type.textContent = `(${item.tipo})`;
+            title.textContent = item.titulo;
+            //imagePost.src = 'data:image/jpeg;base64,' + item.imagem;
+            console.log(imagePost);
+
+            if (item.conteudo.length > 170) {
+                let sizeCont = document.createElement('p');
+                sizeCont.textContent = 'Ver mais...';
+                sizeCont.style.cursor = 'pointer';
+                sizeCont.style.color = 'blue';
+            
+                sizeCont.addEventListener('click', ()=>{
+                    showPost(item, imagePost);
+                });
+            
+                let conteudoCortado = document.createElement('span');
+                conteudoCortado.textContent = item.conteudo.substring(0, 100) + '...';
+                
+                conteudo.appendChild(conteudoCortado);
+                conteudo.appendChild(sizeCont);
+            } else {
+                conteudo.textContent = item.conteudo;
+            }
+            
+    
+            divCont.classList.add('displayMidia');
+            divHead.classList.add('displayHeadMidia');
+            title.classList.add('titleCont');
+            imagePost.classList.add('imagePost');
+            
+            imagePost.style.maxHeight = '100px';
+
+            divHead.appendChild(title);
+            divHead.appendChild(type);
+            divCont.appendChild(divHead);
+            divCont.appendChild(imagePost);
+            divCont.appendChild(separ)
+            divCont.appendChild(conteudo);
+            divCont.id = item.usuario_id;
+            divCont.classList.add(item.tipo);
+    
+            primarySec.appendChild(divCont);
+            
+            divContArray.push(divCont);
+        });
+    } else{ alert('Array inválido') }
+
+    return divContArray;
 }
 
-//Mostrar informações 
-function showPost(postInfo){
+//Mostrar informações de postagem
+function showPost(postInfo, image){
     let secMain = document.querySelector('.showPost');
 
+    image.style.maxHeight = '300px';
     let computedStyle = window.getComputedStyle(secMain);
     let transform = computedStyle.getPropertyValue('transform');
     let divMain = document.createElement('div');
@@ -219,6 +295,8 @@ function showPost(postInfo){
 
     divMain.appendChild(document.createElement('p')).textContent = postInfo.titulo;
     divMain.appendChild(document.createElement('p')).textContent = `(${postInfo.tipo})`;
+    console.log(image)
+    divMain.appendChild(image);
     divMain.appendChild(document.createElement('p')).textContent = postInfo.conteudo;
     divMain.appendChild(btn);
 
@@ -237,61 +315,4 @@ function showPost(postInfo){
             secMain.textContent = '';
         }, 2000)
     })
-}
-
-//Gerador de posts
-function postGenerator(post){
-    // console.log(post)
-    const primarySec = document.querySelector('.contVal');
-    let divContArray = [];
-
-    if(Array.isArray(post)){
-        post.forEach(item => {
-            let divCont = document.createElement('div');
-            let divHead = document.createElement('div');
-            let title = document.createElement('label');
-            let type = document.createElement('label');
-            let conteudo = document.createElement('label');
-    
-            type.textContent = `(${item.tipo})`;
-            title.textContent = item.titulo;
-
-            if (item.conteudo.length > 170) {
-                let sizeCont = document.createElement('p');
-                sizeCont.textContent = 'Ver mais...';
-                sizeCont.style.cursor = 'pointer';
-                sizeCont.style.color = 'blue';
-            
-                sizeCont.addEventListener('click', ()=>{
-                    showPost(item);
-                });
-            
-                let conteudoCortado = document.createElement('span');
-                conteudoCortado.textContent = item.conteudo.substring(0, 170) + '...';
-                
-                conteudo.appendChild(conteudoCortado);
-                conteudo.appendChild(sizeCont);
-            } else {
-                conteudo.textContent = item.conteudo;
-            }
-            
-    
-            divCont.classList.add('displayMidia')
-            divHead.classList.add('displayHeadMidia')
-            title.classList.add('titleCont')
-            
-            divHead.appendChild(title);
-            divHead.appendChild(type);
-            divCont.appendChild(divHead);
-            divCont.appendChild(conteudo);
-            divCont.id = item.usuario_id;
-            divCont.classList.add(item.tipo);
-    
-            primarySec.appendChild(divCont);
-            
-            divContArray.push(divCont);
-        });
-    } else{ alert('Array inválido') }
-
-    return divContArray;
 }

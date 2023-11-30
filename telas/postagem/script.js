@@ -1,3 +1,5 @@
+var base64;
+
 document.addEventListener('DOMContentLoaded', ()=>{
     const forms = document.querySelector('#formulario');
 
@@ -11,10 +13,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
         let userParse = JSON.parse(userData);
         console.log(userData)
-
         let data = {
             titulo: titleData,
             tipo: typeData,
+            imagem: base64,
             conteudo: contData,
             usuario_id: userParse.id
         }
@@ -32,3 +34,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
         });    
     })
 })
+
+function sendImage(){
+    let prewview = document.querySelector('.imagemRend');
+    let file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function (){
+		prewview.src = reader.result;
+        base64 = reader.result;
+	}
+
+    if(file){
+        reader.readAsDataURL(file);
+    } else{
+        alert('Arquivo inválido')
+    }
+}

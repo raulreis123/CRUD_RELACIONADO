@@ -38,3 +38,7 @@
     background-color: #3560a7;
     color: white;
 }
+
+.imagemRend{
+    max-height: 200px;
+}
