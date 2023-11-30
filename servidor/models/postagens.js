@@ -9,12 +9,16 @@ const Postagem = sequelize.define('postagens', {
         autoIncrement: true,
         allowNull: false
     },
+    titulo: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     tipo:{
         type: DataTypes.STRING,
         allowNull: false
     },
-    titulo: {
-        type: DataTypes.STRING,
+    imagem:{
+        type: DataTypes.TEXT,
         allowNull: false
     },
     conteudo: {

@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('node:path');
 const port = 3000;
 const router = require('./services/routerConfig');
 
@@ -9,6 +10,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 //app.use(cors());
 app.use(express.json());
