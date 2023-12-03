@@ -260,3 +260,9 @@ a{
     margin: auto;
     border-radius: 10px;
 }
+
+.positionElements{
+    position: relative;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}

@@ -6,7 +6,7 @@ async function getPost(){
         const response = await axios.get(urlGet);
         if(response.status == 200){
             console.log(response.data.msg);
-            postGenerator(response.data.data)
+            postGenerator(response.data)
         } else { throw new Error('Erro na solicitação'); }
     } catch (error) {
         console.error('Erro durante solicitação' + error);

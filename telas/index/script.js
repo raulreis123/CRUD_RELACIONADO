@@ -235,14 +235,14 @@ function postGenerator(post){
             //imagePost.src = 'data:image/jpeg;base64,' + item.imagem;
             console.log(imagePost);
 
-            if (item.conteudo.length > 170) {
+            if (item.conteudo.length > 170 || true) {
                 let sizeCont = document.createElement('p');
                 sizeCont.textContent = 'Ver mais...';
                 sizeCont.style.cursor = 'pointer';
                 sizeCont.style.color = 'blue';
             
                 sizeCont.addEventListener('click', ()=>{
-                    showPost(item, imagePost);
+                    showPost(item, imageURL);
                 });
             
                 let conteudoCortado = document.createElement('span');
@@ -281,23 +281,37 @@ function postGenerator(post){
 }
 
 //Mostrar informações de postagem
-function showPost(postInfo, image){
+function showPost(postInfo, recImage){
     let secMain = document.querySelector('.showPost');
+    let imagePost = document.createElement('img');
+    let parTitle = document.createElement('p');
 
-    image.style.maxHeight = '300px';
+    imagePost.src = recImage;
+    parTitle.textContent = postInfo.titulo;
+    parTitle.style.fontSize = '25px';
+
+    imagePost.style.maxHeight = '300px';
+    //imagePost.classList.add('positionElements');
+    //parCont.classList.add('positionElements');
+
     let computedStyle = window.getComputedStyle(secMain);
     let transform = computedStyle.getPropertyValue('transform');
     let divMain = document.createElement('div');
+
+    divMain.style.textAlign = 'center';
+    divMain.style.overflow = 'auto';
+
     let btn = document.createElement('button');
     btn.textContent = 'Sair';
     
     btn.classList.add('postBtn');
 
-    divMain.appendChild(document.createElement('p')).textContent = postInfo.titulo;
+    divMain.appendChild(parTitle);
     divMain.appendChild(document.createElement('p')).textContent = `(${postInfo.tipo})`;
-    console.log(image)
-    divMain.appendChild(image);
-    divMain.appendChild(document.createElement('p')).textContent = postInfo.conteudo;
+    // console.log(imagePost)
+    divMain.appendChild(imagePost);
+    divMain.appendChild(document.createElement('p')).textContent = postInfo.conteudo;;
+
     divMain.appendChild(btn);
 
     console.log(transform)
