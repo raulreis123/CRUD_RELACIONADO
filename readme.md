@@ -5,7 +5,7 @@ Este projeto tem como propósito a implementação de um sistema CRUD (Create, R
 * NodeJs: Servidor.
 * MySQL: Banco de dados.
 * HTML: Linguagem de marcação para o conteúdo do site.
-* CSS: Linguagem de estilo para elementos HTML
+* CSS: Linguagem de estilo para elementos HTML.
 * JavaScript: Solicitações e interatividade com elementos HTML.
 
 ## Pacotes Utilizados (Back-End)
@@ -15,4 +15,6 @@ O projeto faz o uso de algumas bibliotecas do JavaScript e NodeJs.
 * Mysql2: Driver de conexão com MySQL.
 * Sequelize: Simplifiar interações com Banco de dados.
 * Axios: Solicitações HTTP.
-* Node-Cache: Armazenamento de dados em cache.
+* Node-Cache: Armazenamento de dados em cache de memória.
+* Path: Manipulação de arquivos e diretórios.
+* FS (File-System): Leitura e escrita de arquivos.

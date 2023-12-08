@@ -1,6 +1,6 @@
 //Conexão e model de usuário 
-const User = require('../models/user');
-const Posts = require('../models/postagens');
+const User = require('../database/models/user');
+const Posts = require('../database/models/postagens');
 //const sequelize = require('../models/db');
 
 class CrudOperations {

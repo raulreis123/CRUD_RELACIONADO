@@ -1,6 +1,7 @@
 const urlGet = 'http://localhost:3000/index';
 const urlGetPost = 'http://localhost:3000/getPost';
 const urlPatch = 'http://localhost:3000/update';
+const urlDel = 'http://localhost:3000/deletePost';
 var conPass; //input de confirmação de senha na sessão 'Meus Dados'
 var conBtn; //botão de confirmação de senha na sessão 'Meus Dados'
 var valid; //input que armazena a senha do user
@@ -60,7 +61,6 @@ async function getDataPost(){
     try {
         let response = await axios.get(urlGetPost);
         let dados = response.data;
-        console.log(dados)
         return dados;
     } catch (error) {
         alert('Servidor indisponível!')
@@ -73,9 +73,8 @@ document.addEventListener('DOMContentLoaded', async() => {
     let dataLS;
     let dataLSP;
     dataLSP = await getDataPost();
-    console.log(dataLSP)
     dataLS = await getDataUser();
-    console.log(dataLS)
+    //console.log(dataLS)
 
     //console.log(dataLS);
 
@@ -104,7 +103,6 @@ document.addEventListener('DOMContentLoaded', async() => {
     let categories = objects[1];
     let myPost = objects[2];
     let editPer = objects[3];
-    console.log(dataUser)
 
     //Filtro de categorias
     categories.addEventListener('click', ()=>{
@@ -233,7 +231,6 @@ function postGenerator(post){
             type.textContent = `(${item.tipo})`;
             title.textContent = item.titulo;
             //imagePost.src = 'data:image/jpeg;base64,' + item.imagem;
-            console.log(imagePost);
 
             if (item.conteudo.length > 170 || true) {
                 let sizeCont = document.createElement('p');
@@ -302,9 +299,11 @@ function showPost(postInfo, recImage){
     divMain.style.overflow = 'auto';
 
     let btn = document.createElement('button');
+    let btnEx;
     btn.textContent = 'Sair';
     
     btn.classList.add('postBtn');
+    
 
     divMain.appendChild(parTitle);
     divMain.appendChild(document.createElement('p')).textContent = `(${postInfo.tipo})`;
@@ -313,14 +312,37 @@ function showPost(postInfo, recImage){
     divMain.appendChild(document.createElement('p')).textContent = postInfo.conteudo;;
 
     divMain.appendChild(btn);
-
-    console.log(transform)
+    
     if( transform == 'matrix(1, 0, 0, 1, -1662.5, 0)'){
         secMain.style.transform = 'translateX(-50%)';
         secMain.appendChild(divMain);
     } else { 
         secMain.style.transform = 'translateX(-237.5%)';
         secMain.textContent = '';
+    }
+
+    //Exclusão apenas para criador
+    if( postInfo.usuario_id === dataUser.id ){
+        let btnEx = document.createElement('button');
+        btnEx.textContent = 'Excluir';
+        btnEx.classList.add('postBtnEx');
+        divMain.appendChild(btnEx);
+
+        btnEx.addEventListener('click', async()=>{
+            try {
+                let postId = postInfo.id;
+                const response = await axios.delete(`${urlDel}?id=${postId}`);
+
+                if(response.status === 200){
+                    alert('Exclusão feita com sucesso!');
+                    window.location.reload(true);
+                } else{ throw new Error('Problema na operação') }
+            } catch (error) {
+                console.error(error.msg);
+            }
+        })
+    }else{
+        console.log('inapto');
     }
 
     btn.addEventListener('click', ()=>{

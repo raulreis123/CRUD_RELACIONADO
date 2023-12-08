@@ -1,7 +1,10 @@
-var base64;
+let base64;
+let prewview;
+let file
 
 document.addEventListener('DOMContentLoaded', ()=>{
     const forms = document.querySelector('#formulario');
+    prewview = document.querySelector('.imagemRend');
 
     forms.addEventListener('submit', async(event)=>{
         event.preventDefault();
@@ -10,6 +13,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         let typeData = document.querySelector('#dataType').value;
         let contData = document.querySelector('#contPost').value;
         let userData = localStorage.getItem('dataUser');
+        file = document.querySelector('input[type=file]').files[0];
 
         let userParse = JSON.parse(userData);
         console.log(userData)
@@ -21,9 +25,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
             usuario_id: userParse.id
         }
 
-        console.log(data);
+        //console.log(data);
     
+        let computedStyle = window.getComputedStyle(prewview);
     
+        if( computedStyle.height > computedStyle.width || !computedStyle ){
+            alert('A imagem deve ser horizontal!');
+            prewview.src = '';
+            return;
+        }
+
+        console.log(file.type);
+
+        if( file.type != "image/png" ){
+            alert('A imagem deve ser PNG');
+            return;
+        }
+
         await axios.post('http://localhost:3000/cadPost', data)
         .then(response => {
             alert(response.data);
@@ -31,23 +49,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
         })
         .catch(error => {
             console.error('erro:', error);
-        });    
+        });
     })
 })
 
 function sendImage(){
-    let prewview = document.querySelector('.imagemRend');
-    let file = document.querySelector('input[type=file]').files[0];
     const reader = new FileReader();
+    let fileParse = document.querySelector('input[type=file]').files[0];
+
+    if(fileParse)
+
+    if(fileParse){
+        reader.readAsDataURL(fileParse);
+    } else{
+        alert('Arquivo inválido')
+    }
 
     reader.onloadend = function (){
 		prewview.src = reader.result;
         base64 = reader.result;
 	}
-
-    if(file){
-        reader.readAsDataURL(file);
-    } else{
-        alert('Arquivo inválido')
-    }
 }

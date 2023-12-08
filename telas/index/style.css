@@ -192,12 +192,15 @@ a{
     top: 90px;
 }
 
+
+/* Elementos gerados por JavaScript */
 .contVal{
     position: relative;
     top: 7px;
     max-width: 1366px;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 50px;
     z-index: 0;
     background-color: #baad6c;
     display: flex;
@@ -209,8 +212,10 @@ a{
 .displayMidia{
     position: relative;
     width: 50%;
-    height: 200px;
+    height: 250px;
     display: block;
+    padding-left: 15px;
+    margin-bottom: 20px;
 }
 
 .displayMidia label{
@@ -238,6 +243,7 @@ a{
     width: 700px;
     background-color: #3e4042;
     transition: all 2s ease-in-out;
+    overflow: auto;
 }
 
 .showPost p{
@@ -253,6 +259,17 @@ a{
     width: 60px;
     border: none;
     border-radius: 5px;
+}
+
+.postBtnEx{
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 60px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
 }
 
 .imagePost{

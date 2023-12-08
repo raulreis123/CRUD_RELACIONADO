@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const CrudOperations = require('./crudClass');
-const CacheMethods = require('./nodeCache');
-const HashModule = require('./hashFunction');
+const CrudOperations = require('../services/crudClass');
+const CacheMethods = require('../services/nodeCache');
+const HashModule = require('../services/hashFunction');
 const path = require('node:path'); //Manipular arquivos e diretórios
-const fs = require('node:fs')
+const fs = require('node:fs') //Escrita e leitura de arquivos
 
 const hashInstance = new HashModule();
 const cacheInstance = new CacheMethods();
@@ -117,7 +117,7 @@ router.post('/cadPost', async(req, res)=>{
     const base64Image = userData.imagem.startsWith(base64Prefix) ? userData.imagem.slice(base64Prefix.length) : userData.imagem;
     const fileName = `${Date.now()}.png`; //nome arquivo
 
-    console.log(base64Image);
+    //console.log(base64Image);
 
     const dirImg = path.join(__dirname, '..', 'images'); //rota arquivo
 
@@ -126,6 +126,7 @@ router.post('/cadPost', async(req, res)=>{
         fs.writeFileSync(path.join(dirImg, fileName), base64Image, 'base64')
 
         const fileWay = (path.join('/images', fileName));
+        console.log(fileWay)
         userData.imagem = fileWay;
     } catch (error) {
         console.error('Erro ao salvar imagem: ' + error);
