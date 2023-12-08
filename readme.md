@@ -2,19 +2,19 @@
 Este projeto tem como propósito a implementação de um sistema CRUD (Create, Read, Update, Delete) dedicado ao gerenciamento de cadastro de mídias físicas. Os usuários têm a capacidade de cadastrar suas mídias, fornecendo informações como título, conteúdo e tipo. Essa relação é modelada como um relacionamento one-to-many, onde um usuário pode ter várias mídias cadastradas.
 
 ## Tecnologias utilizadas:
-* NodeJs: 
+* **NodeJs: 
 - Servidor.
 
-* MySQL:
+* **MySQL:
 - Banco de dados.
 
-* HTML:
+* **HTML:
 - Linguagem de marcação para estruturar o conteúdo do site..
 
-* CSS:
+* **CSS:
 - Linguagem para estilizar elementos HTML.
 
-* JavaScript:
+* **JavaScript:
 - Utilizado para manipulação de elementos HTML. Além disso, é utilizado para realizar solicitações HTTP.
 
 ## Pacotes Utilizados (Back-End)
