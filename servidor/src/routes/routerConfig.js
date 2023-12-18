@@ -3,12 +3,12 @@ const router = express.Router();
 const CrudOperations = require('../services/crudClass');
 const CacheMethods = require('../services/nodeCache');
 const HashModule = require('../services/hashFunction');
-const path = require('node:path'); //Manipular arquivos e diretórios
-const fs = require('node:fs') //Escrita e leitura de arquivos
+const FsModule = require('../services/fs');
 
 const hashInstance = new HashModule();
 const cacheInstance = new CacheMethods();
 const crudInstance = new CrudOperations();
+const fsInstance = new FsModule();
 
 router.get('/dados', async(req,res)=>{
     try {
@@ -112,26 +112,13 @@ router.patch('/update', async(req, res)=>{
 //Rotas relacionadas as postagens
 router.post('/cadPost', async(req, res)=>{
     const userData = req.body;
-    const base64Prefix = 'data:image/png;base64,';
-    //removendo o prefixo
-    const base64Image = userData.imagem.startsWith(base64Prefix) ? userData.imagem.slice(base64Prefix.length) : userData.imagem;
-    const fileName = `${Date.now()}.png`; //nome arquivo
+    const result = fsInstance.writeFile(userData.imagem);
+    console.log(`Objeto retornado: ${result.data}`)
 
-    //console.log(base64Image);
-
-    const dirImg = path.join(__dirname, '..', 'images'); //rota arquivo
-
-    try {
-        //escrita de forma sincrona, junção de caminho absoluto, dados, formato de dados
-        fs.writeFileSync(path.join(dirImg, fileName), base64Image, 'base64')
-
-        const fileWay = (path.join('/images', fileName));
-        console.log(fileWay)
-        userData.imagem = fileWay;
-    } catch (error) {
-        console.error('Erro ao salvar imagem: ' + error);
-        res.status(500).json({ erro: 'Erro interno no servidor' })
-        return;
+    if( result.success ){
+        userData.imagem = result.data;
+    } else{
+        res.status(500).json(result.msg);
     }
 
     const response = await crudInstance.cadPost(userData);
@@ -148,7 +135,7 @@ router.get('/getPost', async(req, res)=>{
             id: postagem.id,
             titulo: postagem.titulo,
             tipo: postagem.tipo,
-            imagem: postagem.imagem ? getBase64Image(postagem.imagem) : null,
+            imagem: postagem.imagem ? fsInstance.renderFile(postagem.imagem) : null,
             conteudo: postagem.conteudo,
             usuario_id: postagem.usuario_id
         }));
@@ -156,14 +143,6 @@ router.get('/getPost', async(req, res)=>{
         res.status(200).send(resposta);
      }
 })
-
-function getBase64Image(imagePath){
-    const dirImg = path.join(__dirname, '..');
-    const filePath = path.join(dirImg, imagePath)
-
-    const base64Image = fs.readFileSync(filePath, 'base64');
-    return base64Image;
-}
 
 router.delete('/deletePost', async(req, res)=>{
     const postId = req.query.id;
