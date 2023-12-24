@@ -21,15 +21,15 @@ async function valid(){
     try {
         const response = await axios.post(urlLogin, userSend)
         console.log(response);
-        valid = response;
+        valid = response.data;
         receb = response.data.data;
         console.log(receb)
     } catch (error) {
         alert(`Erro ao receber dados: ${error}`)
     }
 
-    if( valid.status == 200 ){
-        alert('acesso permitido');
+    if( valid.acess ){
+        alert(valid.msg);
         const { id, email, nome } = receb;
         user = { id, email, password, nome };
 
@@ -40,7 +40,7 @@ async function valid(){
             alert(`Erro no envio de dados: ${error}`);
         }
     } else{
-        alert('acesso negado');
+        alert(valid.msg);
     }
 }
 
