@@ -8,66 +8,40 @@ var user = {
 
 const urlGet = 'http://localhost:3000/dados';
 const urlPost = 'http://localhost:3000/sendData';
-
-document.addEventListener('DOMContentLoaded', getData);
-
-async function getData(){
-    try {
-        axios.get(urlGet)
-        .then(response => {
-            receb = response.data;
-            console.log(receb)
-        })
-        .catch(error => {
-            alert('Erro ao obter dados do servidor:', error);
-            window.location.reload(true);
-        });
-    } catch (error) {
-        alert('Não foi possível obter os dados' + error)
-    }
-    
-}
-
+const urlLogin = 'http://localhost:3000/login';
 
 async function valid(){
     let emailV = document.querySelector('#textEmail').value
     let password = document.querySelector('#pass').value
-    let passV;
-    let key = 0;
-    var valid = false;
+    const userSend = {
+        email: emailV,
+        senha: password
+    }
     
-    for (let i = 0; i < receb.length; i++) {
-        try {
-            passV = await hashCode(password);
-            console.log(passV)
-        } catch (error) {
-            console.log('Não foi possivel realizar a autenticação: ' + error)
-        }
-
-        if( emailV == receb[i].email && passV == receb[i].senha ){
-            valid = true;
-            key = i;
-            break;
-        } 
+    try {
+        const response = await axios.post(urlLogin, userSend)
+        console.log(response);
+        valid = response;
+        receb = response.data.data;
+        console.log(receb)
+    } catch (error) {
+        alert(`Erro ao receber dados: ${error}`)
     }
 
-    if( valid ){
+    if( valid.status == 200 ){
         alert('acesso permitido');
-        user.id = receb[key].id;
-        user.email = receb[key].email;
-        user.password = password;
-        user.nome = receb[key].nome;
+        const { id, email, nome } = receb;
+        user = { id, email, password, nome };
+
         try {
             axios.post(urlPost, user);
             setTimeout(()=>{window.location.href = '../index/index.html';}, 1000)
         } catch (error) {
-            alert(error)
+            alert(`Erro no envio de dados: ${error}`);
         }
     } else{
         alert('acesso negado');
     }
-
-    // console.log(/*receb[0].email*/Object.values(receb));
 }
 
 document.addEventListener('DOMContentLoaded', async()=>{
@@ -87,28 +61,24 @@ function cadRouter(){
 }
 
 function veri(){
-    var varver = document.querySelector('.text').value;
-    var msg = document.querySelector('.warn');
-    var regex1 = /@/g;
-    var regex2 = /\./g;
+    let varver = document.querySelector('.text').value;
+    let msg = document.querySelector('.warn');
+    let regex1 = /@/g;
+    let regex2 = /\./g;
 
-    var tof = regex1.test(varver);
-    var tof1 = regex2.test(varver);
+    let tof = regex1.test(varver);
+    let tof1 = regex2.test(varver);
 
     if(tof === true && tof1 === true){
         msg.style.opacity = '0';
-        //console.log('email invalido');
     } else{ 
-        msg.style.opacity = '0.9';
-        //console.log('email valido') 
+        msg.style.opacity = '0.9'; 
     }
 }
 
 function chbx(){
-    var chbx = document.getElementById('chbox');
-    var pass = document.getElementById('pass');
-
-    console.log(pass);
+    let chbx = document.getElementById('chbox');
+    let pass = document.getElementById('pass');
 
     if(chbx.checked){
         pass.type = 'text';
@@ -119,7 +89,7 @@ function chbx(){
 
 async function hashCode(pass){
     const encoder = new TextEncoder();
-    var stringBit = encoder.encode(pass);
+    const stringBit = encoder.encode(pass);
 
     const hashBuffer = await crypto.subtle.digest('SHA-256', stringBit); //API nativa do navegador
     const hashConvert = Array.from(new Uint8Array(hashBuffer)) // convertido em hex de 8 bits (0 a 255)

@@ -32,6 +32,47 @@ router.post('/registro', async(req, res)=>{
     }
 })
 
+router.post('/login', async(req, res)=>{
+    const user = req.body;
+    console.log(user);
+    try {
+        const users = await crudInstance.getUsers();
+        const hashPass = await hashInstance.hashCode(user.senha);
+
+        const userFound = users.find(item => 
+            item.email === user.email
+        )
+
+        if(userFound){
+            // const corPass = ;
+            if(hashPass === userFound.senha){
+                const obj = userFound;
+                res.status(200).json(
+                    {   
+                        acess: true,
+                        msg: 'Acesso permitido',
+                        data: obj
+                    });
+            } else{ 
+                res.status(401).json({
+                    acess: false,
+                    msg: 'Senha incorreta',
+                }) 
+            }
+        } else{
+            res.status(404).json({
+                acess: false,
+                msg: 'usuário não encontrado'
+            })
+        }
+    } catch (error) {
+        console.error('Erro encontrado: ' + error)
+        res.status(500).json({
+            msg: 'Erro interno do servidor'
+        })
+    }
+})
+
 router.delete('/delete', async(req, res)=>{
     try {
         const userId = req.query.id;
