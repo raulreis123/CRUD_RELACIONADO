@@ -352,3 +352,19 @@ function showPost(postInfo, recImage){
         }, 2000)
     })
 }
+
+// Limpar localStorage ao fechamento de aba
+let isTabClosing = false
+
+window.addEventListener('beforeunload', () => {
+    if (isTabClosing) {
+        alert('fechando')
+        localStorage.clear();
+    }
+});
+
+window.addEventListener('visibilitychange', ()=>{
+    if( document.visibilityState === 'hidden' ) {
+        isTabClosing = true;
+    }
+})

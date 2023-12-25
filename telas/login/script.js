@@ -1,10 +1,5 @@
 let receb;
-var user = {
-    id: 0,
-    email: '',
-    password: '',
-    nome: ''
-}
+var user = {}
 
 const urlGet = 'http://localhost:3000/dados';
 const urlPost = 'http://localhost:3000/sendData';
@@ -23,7 +18,6 @@ async function valid(){
         console.log(response);
         valid = response.data;
         receb = response.data.data;
-        console.log(receb)
     } catch (error) {
         alert(`Erro ao receber dados: ${error}`)
     }
@@ -69,11 +63,7 @@ function veri(){
     let tof = regex1.test(varver);
     let tof1 = regex2.test(varver);
 
-    if(tof === true && tof1 === true){
-        msg.style.opacity = '0';
-    } else{ 
-        msg.style.opacity = '0.9'; 
-    }
+    msg.style.opacity = tof == true && tof1 == true ? '0' : '0.9';
 }
 
 function chbx(){
