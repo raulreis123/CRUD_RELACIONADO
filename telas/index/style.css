@@ -1,3 +1,7 @@
+body{
+    text-align: center;
+}
+
 header{
     position: fixed;
     top: 0;
@@ -22,12 +26,13 @@ header{
     position: absolute;
     top: 75px;
     left: 0;
-    width: 200px;
-    height: 0px;
-    border-bottom-right-radius: 15px;
+    width: 250px;
+    height: 89vh;
+    border-bottom-right-radius: 10px;
     background-color: #3e4042;
     overflow: auto;
     transition: all 1.5s ease-in-out;
+    transform: translateX(-250px);
 }
 
 .pMl{
@@ -35,6 +40,15 @@ header{
     left: 20px;
     color: white;
     cursor: pointer;
+}
+
+.pMlB{
+    position: relative;
+    padding-bottom: 0px;
+    left: 20px;
+    top: 65%;
+    cursor: pointer;
+    color: white;
 }
 
 .categorias{
@@ -56,10 +70,6 @@ header{
     position: relative;
     top: -10px;
     height: 80px;
-}
-
-body{
-    text-align: center;
 }
 
 .imgUser{
