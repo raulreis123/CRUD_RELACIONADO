@@ -297,7 +297,6 @@ function showPost(postInfo, recImage){
     divMain.style.overflow = 'auto';
 
     let btn = document.createElement('button');
-    let btnEx;
     btn.textContent = 'Sair';
     
     btn.classList.add('postBtn');

@@ -10,6 +10,12 @@ const cacheInstance = new CacheMethods();
 const crudInstance = new CrudOperations();
 const fsInstance = new FsModule();
 
+
+/**
+ * @route   GET http.../users/dados
+ * @desc    Pegar dados de usuário
+ * @access  Private
+ */
 router.get('/dados', async(req,res)=>{
     try {
         const data = await crudInstance.getUsers();
@@ -19,10 +25,15 @@ router.get('/dados', async(req,res)=>{
     }
 })
 
+
+/**
+ * @route   POST http.../users/registro
+ * @desc    Registrar novo usuário
+ * @access  Public
+ */
 router.post('/registro', async(req, res)=>{
     const user = req.body;
     let hash = await hashInstance.hashCode(user.senha);
-    console.log(hash);
     user.senha = hash;    
     const response = await crudInstance.cadUser(user); 
     if(!response){
@@ -32,6 +43,12 @@ router.post('/registro', async(req, res)=>{
     }
 })
 
+
+/**
+ * @route   POST http.../users/login
+ * @desc    Autenticar login
+ * @access  Public
+ */
 router.post('/login', async(req, res)=>{
     const user = req.body;
     console.log(user);
@@ -44,11 +61,9 @@ router.post('/login', async(req, res)=>{
         )
 
         if(userFound){
-            // const corPass = ;
             if(hashPass === userFound.senha){
                 const obj = userFound;
-                res.status(200).json(
-                    {   
+                res.status(200).json({   
                         acess: true,
                         msg: 'Acesso permitido',
                         data: obj
@@ -73,12 +88,18 @@ router.post('/login', async(req, res)=>{
     }
 })
 
+
+/**
+ * @route   DELETE http.../users/delete
+ * @desc    Apagar registro de usuário
+ * @access  Public
+ */
 router.delete('/delete', async(req, res)=>{
     try {
         const userId = req.query.id;
 
         if (!userId) {
-            return res.status(400).json({
+            res.status(400).json({
                 success: false,
                 error: true,
                 msg: 'O parâmetro "id" é obrigatório na consulta.'
@@ -88,12 +109,12 @@ router.delete('/delete', async(req, res)=>{
         const response = await crudInstance.deleteUser(userId);
 
         if(response.success){
-            return res.status(response.status).json({
+            res.status(response.status).json({
                 success: true,
                 msg: 'Usuário excluido'
             })
         } else{ 
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 erro: true,
                 msg: 'Usuário não encontrado'
@@ -108,13 +129,25 @@ router.delete('/delete', async(req, res)=>{
     }
 })
 
+
+/**
+ * @route   POST http.../users/sendData
+ * @desc    Enviar dados de usuário para o servidor
+ * @access  Private
+ */
 router.post('/sendData', async(req, res)=>{
     var userData = req.body;
     console.log(Object.values(userData))
     cacheInstance.setItem(userData);
     res.status(200).json({msg:'dados enviados'})
-  })
-  
+})
+
+
+/**
+ * @route   GET http.../users/index
+ * @desc    Pegar dados de usuário mantidos temporariamente no servidor
+ * @access  Private
+ */
 router.get('/index', async(req, res)=>{
     try {
         var response = await cacheInstance.getItem();
@@ -129,7 +162,7 @@ router.get('/index', async(req, res)=>{
                 { success: true, msg: 'Usuário encontrado', data: response}
             )
         }
-    } catch (error) {
+    } catch ( error ) {
         res.status(500).json({
             success: false,
             msg: 'Erro ao capturar dados' + error.message
@@ -137,21 +170,36 @@ router.get('/index', async(req, res)=>{
     }
 })
 
-router.patch('/update', async(req, res)=>{
+
+/**
+ * @route   PATCH http.../users/update
+ * @desc    Atualizar dados de usuário
+ * @access  Public
+ */
+router.patch('/update', async( req, res )=>{
     const userId = req.query.id
     const data = req.body;
     data.senha = await hashInstance.hashCode(data.senha);
     const result = await crudInstance.upUser(userId, data);
 
-    if(result && result.success){
+    if ( result && result.success ){
         res.status(result.status).json(result.msg);
     } else{ res.status(result.status).json(result.msg); }
 })
 
 
 
-//Rotas relacionadas as postagens
-router.post('/cadPost', async(req, res)=>{
+
+
+/** @Rotas relacionadas as postagens */
+
+
+/**
+ * @route   POST http.../users/cadPost
+ * @desc    Cadastrar novas postagens
+ * @access  Public
+ */
+router.post('/cadPost', async (req, res)=>{
     const userData = req.body;
     const result = fsInstance.writeFile(userData.imagem);
     console.log(`Objeto retornado: ${result.data}`)
@@ -166,6 +214,12 @@ router.post('/cadPost', async(req, res)=>{
     res.status(response.status).json(response.msg)
 })
 
+
+/**
+ * @route   GEST http.../users/getPost
+ * @desc    Pegar dados das postagens
+ * @access  Private
+ */
 router.get('/getPost', async(req, res)=>{
     let data = await crudInstance.getPost();
 
@@ -185,6 +239,12 @@ router.get('/getPost', async(req, res)=>{
      }
 })
 
+
+/**
+ * @route   delete http.../users/deletePost
+ * @desc    Apagar postagem
+ * @access  Public
+ */
 router.delete('/deletePost', async(req, res)=>{
     const postId = req.query.id;
     console.log(postId)
