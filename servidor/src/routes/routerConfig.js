@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const CrudOperations = require('../services/crudClass');
 const CacheMethods = require('../services/nodeCache');
-const HashModule = require('../services/hashFunction');
 const FsModule = require('../services/fs');
+const hashCode = require('../services/hashFunction')
 
-const hashInstance = new HashModule();
 const cacheInstance = new CacheMethods();
 const crudInstance = new CrudOperations();
 const fsInstance = new FsModule();
@@ -33,14 +32,10 @@ router.get('/dados', async(req,res)=>{
  */
 router.post('/registro', async(req, res)=>{
     const user = req.body;
-    let hash = await hashInstance.hashCode(user.senha);
-    user.senha = hash;    
+    hashCode(user.senha).then(hash=> {user.senha = hash})
+    
     const response = await crudInstance.cadUser(user); 
-    if(!response){
-        res.status(response.status).send(response.msg)
-    } else{
-        res.status(response.status).send(response.msg)
-    }
+    res.status(response.status).send(response.msg)
 })
 
 
@@ -54,7 +49,7 @@ router.post('/login', async(req, res)=>{
     console.log(user);
     try {
         const users = await crudInstance.getUsers();
-        const hashPass = await hashInstance.hashCode(user.senha);
+        hashCode(user.senha).then(hash =>{ user.senha = hash; })
 
         const userFound = users.find(item => 
             item.email === user.email
@@ -179,7 +174,7 @@ router.get('/index', async(req, res)=>{
 router.patch('/update', async( req, res )=>{
     const userId = req.query.id
     const data = req.body;
-    data.senha = await hashInstance.hashCode(data.senha);
+    hashCode(data.senha).then(hash =>{data.senha = hash});
     const result = await crudInstance.upUser(userId, data);
 
     if ( result && result.success ){

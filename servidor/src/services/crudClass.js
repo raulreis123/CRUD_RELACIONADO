@@ -42,7 +42,7 @@ class CrudOperations {
                 msg: 'Usuário cadastrado'
             }
         }
-         catch(error) {
+        catch(error) {
             console.error('Erro na operação: ' + error)
             return {
                 status: 400,
