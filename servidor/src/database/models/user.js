@@ -1,9 +1,8 @@
 const DataTypes = require('sequelize');
-const sequelize = require('./db'); // Importe a instância do Sequelize que você configurou
+const sequelize = require('./db');
 
 const User = sequelize.define('users', {
-    //tabela criada para poder interagir com a tabela users do bd
-    id: { //id é indentificação primária do usuário cadastrado
+    id: {
         primaryKey: true,
         autoIncrement: true, //Define o autoincremento
         type: DataTypes.INTEGER,
