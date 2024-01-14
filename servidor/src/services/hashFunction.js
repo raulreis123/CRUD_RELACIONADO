@@ -1,12 +1,11 @@
 const crypto = require('crypto');
 
-/*class HashFunction {
-    async hashCode(data){
-        let hash = crypto.createHash('SHA-256').update(data).digest('hex');
-        return hash;
-    }
-}*/
 
+/** 
+ * @type function
+ * @desc função para fazer cálculo de hash em senhas
+ * @access public 
+*/
 async function hashCode(data){
     let hash = crypto.createHash('SHA-256').update(data).digest('hex');
     return hash;

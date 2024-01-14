@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path')
 
-
 class fileSystem {
     writeFile(base64){
         const base64Prefix = 'data:image/png;base64,'; //Prefixo

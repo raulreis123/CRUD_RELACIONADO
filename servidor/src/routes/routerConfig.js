@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require('express')
+const router = Router();
 const CrudOperations = require('../services/crudClass');
 const CacheMethods = require('../services/nodeCache');
 const FsModule = require('../services/fs');
@@ -13,7 +13,7 @@ const fsInstance = new FsModule();
 /**
  * @route   GET http.../users/dados
  * @desc    Pegar dados de usuário
- * @access  Private
+ * @access  private
  */
 router.get('/dados', async(req,res)=>{
     try {
@@ -28,7 +28,7 @@ router.get('/dados', async(req,res)=>{
 /**
  * @route   POST http.../users/registro
  * @desc    Registrar novo usuário
- * @access  Public
+ * @access  public
  */
 router.post('/registro', async(req, res)=>{
     const user = req.body;
@@ -42,7 +42,7 @@ router.post('/registro', async(req, res)=>{
 /**
  * @route   POST http.../users/login
  * @desc    Autenticar login
- * @access  Public
+ * @access  public
  */
 router.post('/login', async(req, res)=>{
     const user = req.body;
@@ -87,7 +87,7 @@ router.post('/login', async(req, res)=>{
 /**
  * @route   DELETE http.../users/delete
  * @desc    Apagar registro de usuário
- * @access  Public
+ * @access  public
  */
 router.delete('/delete', async(req, res)=>{
     try {
@@ -128,7 +128,7 @@ router.delete('/delete', async(req, res)=>{
 /**
  * @route   POST http.../users/sendData
  * @desc    Enviar dados de usuário para o servidor
- * @access  Private
+ * @access  private
  */
 router.post('/sendData', async(req, res)=>{
     var userData = req.body;
@@ -141,7 +141,7 @@ router.post('/sendData', async(req, res)=>{
 /**
  * @route   GET http.../users/index
  * @desc    Pegar dados de usuário mantidos temporariamente no servidor
- * @access  Private
+ * @access  private
  */
 router.get('/index', async(req, res)=>{
     try {
@@ -169,7 +169,7 @@ router.get('/index', async(req, res)=>{
 /**
  * @route   PATCH http.../users/update
  * @desc    Atualizar dados de usuário
- * @access  Public
+ * @access  public
  */
 router.patch('/update', async( req, res )=>{
     const userId = req.query.id
@@ -192,7 +192,7 @@ router.patch('/update', async( req, res )=>{
 /**
  * @route   POST http.../users/cadPost
  * @desc    Cadastrar novas postagens
- * @access  Public
+ * @access  public
  */
 router.post('/cadPost', async (req, res)=>{
     const userData = req.body;
@@ -202,7 +202,7 @@ router.post('/cadPost', async (req, res)=>{
     if( result.success ){
         userData.imagem = result.data;
     } else{
-        res.status(500).json(result.msg);
+        return res.status(500).json(result.msg);
     }
 
     const response = await crudInstance.cadPost(userData);
@@ -211,9 +211,9 @@ router.post('/cadPost', async (req, res)=>{
 
 
 /**
- * @route   GEST http.../users/getPost
+ * @route   GET http.../users/getPost
  * @desc    Pegar dados das postagens
- * @access  Private
+ * @access  private
  */
 router.get('/getPost', async(req, res)=>{
     let data = await crudInstance.getPost();
@@ -236,9 +236,9 @@ router.get('/getPost', async(req, res)=>{
 
 
 /**
- * @route   delete http.../users/deletePost
+ * @route   DELETE http.../users/deletePost
  * @desc    Apagar postagem
- * @access  Public
+ * @access  public
  */
 router.delete('/deletePost', async(req, res)=>{
     const postId = req.query.id;
