@@ -7,7 +7,7 @@ const urlLogin = 'http://localhost:3000/login';
 
 async function valid(){
     let emailV = document.querySelector('#textEmail').value
-    let password = document.querySelector('#pass').value
+    let password = document.querySelector('#pass').value;
     const userSend = {
         email: emailV,
         senha: password
@@ -55,13 +55,13 @@ function cadRouter(){
 }
 
 function veri(){
-    let varver = document.querySelector('.text').value;
+    let varVer = document.querySelector('.text').value;
     let msg = document.querySelector('.warn');
     let regex1 = /@/g;
     let regex2 = /\./g;
 
-    let tof = regex1.test(varver);
-    let tof1 = regex2.test(varver);
+    let tof = regex1.test(varVer);
+    let tof1 = regex2.test(varVer);
 
     msg.style.opacity = tof == true && tof1 == true ? '0' : '0.9';
 }

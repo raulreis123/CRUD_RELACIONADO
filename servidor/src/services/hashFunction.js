@@ -1,6 +1,5 @@
 const crypto = require('crypto');
 
-
 /** 
  * @type function
  * @desc função para fazer cálculo de hash em senhas

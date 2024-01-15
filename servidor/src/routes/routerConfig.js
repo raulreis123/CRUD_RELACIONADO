@@ -49,14 +49,20 @@ router.post('/login', async(req, res)=>{
     console.log(user);
     try {
         const users = await crudInstance.getUsers();
-        hashCode(user.senha).then(hash =>{ user.senha = hash; })
+        hashCode(user.senha).then(
+            hash =>{ 
+                user.senha = hash;
+                console.log('ola senha' + user.senha);
+        })
+        .catch(error =>{ console.error(`Erro na operação: ${error}`) });
 
         const userFound = users.find(item => 
             item.email === user.email
-        )
+        )   
 
         if(userFound){
-            if(hashPass === userFound.senha){
+            console.log(`pass from bd ${userFound.senha}, pass from user ${user.senha}`)
+            if(user.senha === userFound.senha){
                 const obj = userFound;
                 res.status(200).json({   
                         acess: true,
@@ -64,7 +70,7 @@ router.post('/login', async(req, res)=>{
                         data: obj
                     });
             } else{ 
-                res.status(401).json({
+                res.status(200).json({
                     acess: false,
                     msg: 'Senha incorreta',
                 }) 
