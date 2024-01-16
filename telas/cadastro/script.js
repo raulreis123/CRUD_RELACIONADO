@@ -48,10 +48,7 @@ function veri(){
                 .then(response => {
                     console.log('Resposta:', response.data);
                     alert("Dados cadastrados!");
-                    setTimeout(()=>{
-                        window.location.href = "../login/login.html";
-                    }, 2000)
-    
+                    window.location.href = "../login/login.html";
                 })
                 .catch(error => {
                     console.error('erro:', error);

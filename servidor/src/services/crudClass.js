@@ -18,7 +18,8 @@ class CrudOperations {
         try{
             const user = await User.findByPk(id);
 
-            if(!user){
+            console.log(user.dataValues);
+            if(!user.dataValues){
                 throw new Error('Usuário não encontrado ou inexistente');
             }
             await user.destroy();

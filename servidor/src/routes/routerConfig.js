@@ -32,7 +32,7 @@ router.get('/dados', async(req,res)=>{
  */
 router.post('/registro', async(req, res)=>{
     const user = req.body;
-    hashCode(user.senha).then(hash=> {user.senha = hash})
+    await hashCode(user.senha).then(hash=> {user.senha = hash;})
     
     const response = await crudInstance.cadUser(user); 
     res.status(response.status).send(response.msg)
@@ -49,16 +49,12 @@ router.post('/login', async(req, res)=>{
     console.log(user);
     try {
         const users = await crudInstance.getUsers();
-        hashCode(user.senha).then(
-            hash =>{ 
-                user.senha = hash;
-                console.log('ola senha' + user.senha);
-        })
-        .catch(error =>{ console.error(`Erro na operação: ${error}`) });
+        await hashCode(user.senha).then(hash =>{ user.senha = hash; })
+        .catch(error =>{ console.error(`Erro na operação: ${error}`); });
 
         const userFound = users.find(item => 
             item.email === user.email
-        )   
+        )
 
         if(userFound){
             console.log(`pass from bd ${userFound.senha}, pass from user ${user.senha}`)
