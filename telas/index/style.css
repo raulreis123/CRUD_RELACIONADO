@@ -66,6 +66,13 @@ header{
     display: list-item;
 }
 
+.searchFilter{
+    position: absolute;
+    top: 20px;
+    right: 170px;
+    outline: none;
+}
+
 .imgLogo{
     position: relative;
     top: -10px;

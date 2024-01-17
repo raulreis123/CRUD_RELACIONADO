@@ -149,6 +149,26 @@ function categoriesFilter(label){
     }) //                    operator    condição
 }
 
+//Filtro de pesquisa para postagens
+function searchFilter(boxValue){
+    let value = boxValue.value;
+    console.log(responsePost[1])
+    
+    if(value == 0){
+        responsePost.forEach(elm =>{
+            elm.style.display = 'block';
+        }) 
+    } else{
+        responsePost.forEach(elm =>{
+            if(elm.classList.contains(value)){
+                elm.style.display = 'block';
+            } else{
+                elm.style.display = 'none';
+            }
+        })
+    }
+}
+
 //Mostrar menu de usuário
 function showUser(){
     var showData = document.querySelectorAll('.showData');
