@@ -151,8 +151,8 @@ function categoriesFilter(label){
 
 //Filtro de pesquisa para postagens
 function searchFilter(boxValue){
-    let value = boxValue.value;
-    console.log(responsePost[1])
+    let value = boxValue.value.toLowerCase();
+    console.log(responsePost[1].outerHTML)
     
     if(value == 0){
         responsePost.forEach(elm =>{
@@ -160,7 +160,7 @@ function searchFilter(boxValue){
         }) 
     } else{
         responsePost.forEach(elm =>{
-            if(elm.classList.contains(value)){
+            if(elm.outerHTML.toLowerCase().includes(value)){
                 elm.style.display = 'block';
             } else{
                 elm.style.display = 'none';
