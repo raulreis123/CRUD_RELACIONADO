@@ -3,6 +3,7 @@ const app = express();
 const path = require('node:path');
 const port = 3000;
 const router = require('../src/routes/routerConfig');
+// const userAuth = require();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
