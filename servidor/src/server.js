@@ -4,6 +4,10 @@ const path = require('node:path');
 const port = 3000;
 const router = require('../src/routes/routerConfig');
 // const userAuth = require();
+const sayHello = (next)=>{
+  console.log('middleware active!!!');
+  next();
+}
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -19,6 +23,7 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 //app.use(cors());
 app.use(express.json());
+app.use(sayHello);
 app.use('/', router);
 
 app.listen(port, ()=>{
