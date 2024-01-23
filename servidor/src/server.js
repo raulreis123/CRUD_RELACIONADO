@@ -4,7 +4,7 @@ const path = require('node:path');
 const port = 3000;
 const router = require('../src/routes/routerConfig');
 // const userAuth = require();
-const sayHello = (next)=>{
+const sayHello = (req, res, next)=>{
   console.log('middleware active!!!');
   next();
 }

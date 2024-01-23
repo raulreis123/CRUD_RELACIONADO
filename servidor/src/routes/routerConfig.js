@@ -4,7 +4,10 @@ const CrudOperations = require('../services/crudClass');
 const CacheMethods = require('../services/nodeCache');
 const FsModule = require('../services/fs');
 const hashCode = require('../services/hashFunction')
+const JwtClass = require('../middleware/userAuthentication');
 
+const SECRET_KEY = '6412180';
+const jwtInstance = new JwtClass(SECRET_KEY);
 const cacheInstance = new CacheMethods();
 const crudInstance = new CrudOperations();
 const fsInstance = new FsModule();
@@ -16,8 +19,11 @@ const fsInstance = new FsModule();
  * @access  private
  */
 router.get('/dados', async(req,res)=>{
+    const payload = req.body;
+    const token = req.headers['authorization'];
     try {
         const data = await crudInstance.getUsers();
+        jwtInstance.verifyToken(payload, token)
         res.send(data); 
     } catch (error) {
         console.error('erro na obtenção de usuário' + error)
