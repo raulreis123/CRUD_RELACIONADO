@@ -22,3 +22,4 @@ O projeto faz o uso de algumas bibliotecas JavaScript e NodeJs.
 * `Node-Cache`: Armazenamento de dados em cache de memória.
 * `Path`: Manipulação de arquivos e diretórios.
 * `FS (File-System)`: Leitura e escrita de arquivos.
+* `JWT (Json Web Token)`: Token para controle de usuários as rotas.
