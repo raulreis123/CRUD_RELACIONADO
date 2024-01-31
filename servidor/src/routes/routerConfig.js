@@ -18,12 +18,9 @@ const fsInstance = new FsModule();
  * @desc    Pegar dados de usuário
  * @access  private
  */
-router.get('/dados', async(req,res)=>{
-    const payload = req.body;
-    const token = req.headers['authorization'];
+router.get('/dados', jwtInstance.verifyToken.bind(JwtClass), async(req,res)=>{
     try {
         const data = await crudInstance.getUsers();
-        jwtInstance.verifyToken(payload, token)
         res.send(data); 
     } catch (error) {
         console.error('erro na obtenção de usuário' + error)
@@ -63,16 +60,24 @@ router.post('/login', async(req, res)=>{
         )
 
         if(userFound){
-            console.log(`pass from bd ${userFound.senha}, pass from user ${user.senha}`)
+            // console.log(`pass from bd ${userFound.senha}, pass from user ${user.senha}`)
             if(user.senha === userFound.senha){
                 const obj = userFound;
-                res.status(200).json({   
+                let tokenResponse = jwtInstance.userAsign(obj.dataValues.id)
+                if (tokenResponse.success) {
+                    res.header('Authorization', `Bearer ${tokenResponse.token}`)
+                    res.status(200).json({   
                         acess: true,
                         msg: 'Acesso permitido',
-                        data: obj
-                    });
+                        data: obj,
+                        token: tokenResponse.token
+                    })
+                } else {
+                    res.status(500).json({ msg: 'Erro na geração de Token' })   
+                }
+
             } else{ 
-                res.status(200).json({
+                res.status(201).json({
                     acess: false,
                     msg: 'Senha incorreta',
                 }) 
