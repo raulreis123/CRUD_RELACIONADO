@@ -21,5 +21,6 @@ O projeto faz o uso de algumas bibliotecas JavaScript e NodeJs.
 * `Axios`: Solicitações HTTP.
 * `Node-Cache`: Armazenamento de dados em cache de memória.
 * `Path`: Manipulação de arquivos e diretórios.
+* `Crypto`: Criptografia de senhas usando Hash.
 * `FS (File-System)`: Leitura e escrita de arquivos.
 * `JWT (Json Web Token)`: Token para controle de usuários as rotas.
