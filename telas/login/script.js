@@ -8,9 +8,10 @@ const urlLogin = 'http://localhost:3000/login';
 async function valid(){
     let emailV = document.querySelector('#textEmail').value
     let password = document.querySelector('#pass').value;
+    let token;
     const userSend = {
         email: emailV,
-        senha: password
+        senha: password,
     }
     
     try {
@@ -18,18 +19,20 @@ async function valid(){
         console.log(response);
         valid = response.data;
         receb = response.data.data;
+        token = response.headers['Authorization'];
     } catch (error) {
         alert(`Erro ao receber dados: ${error}`)
     }
 
     if( valid.acess ){
+        console.log(`Token from Authorization: ${token}`)
         alert(valid.msg);
         const { id, email, nome } = receb;
         user = { id, email, password, nome };
 
         try {
-            axios.post(urlPost, user);
-            setTimeout(()=>{window.location.href = '../index/index.html';}, 1000)
+            axios.post(urlPost, user, { headers: { 'authorization' : token } });
+            setTimeout(()=>{window.location.href = '../index/index.html';}, 500)
         } catch (error) {
             alert(`Erro no envio de dados: ${error}`);
         }
