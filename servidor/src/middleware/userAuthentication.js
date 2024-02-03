@@ -22,7 +22,7 @@ class JwtClass {
             req.user = payload;
             next();
         } catch (error) {
-            console.error(`Erro encontrado: ${error.message}`)
+            console.error(`Erro encontrado em verify token: ${error.message}`)
             res.status(401).json({ msg: 'Token invalido' })
         }
     } 

@@ -73,7 +73,7 @@ router.post('/login', async(req, res)=>{
                         token: tokenResponse.token
                     })
                 } else {
-                    res.status(500).json({ msg: 'Erro na geração de Token' })   
+                    res.status(500).json({ msg: 'Erro na geração de Token: rota login' })   
                 }
 
             } else{ 
@@ -143,9 +143,9 @@ router.delete('/delete', async(req, res)=>{
  * @desc    Enviar dados de usuário para o servidor
  * @access  private
  */
-router.post('/sendData', async(req, res)=>{
+router.post('/sendData', jwtInstance.verifyToken.bind(JwtClass), async(req, res)=>{
     var userData = req.body;
-    console.log(Object.values(userData))
+    console.log(`Dados: ${Object.values(userData)}, Token: ${req.headers['authorization']}`)
     cacheInstance.setItem(userData);
     res.status(200).json({msg:'dados enviados'})
 })
