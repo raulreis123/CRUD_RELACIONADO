@@ -9,7 +9,8 @@ class JwtClass {
     //Verificando a autencidade do Token
 
     verifyToken = (req, res, next)=>{
-        console.log(`Chave: ${this.secretKey}`)
+        console.log(`Chave construtora: ${this.secretKey}`)
+        console.log(`VerifyToken, headers response: ${req.headers}`)
         const headerAuth = req.headers['authorization'];
         const token = headerAuth ? headerAuth.replace(/^Bearer\s/, '') : null;
 
@@ -23,7 +24,7 @@ class JwtClass {
             next();
         } catch (error) {
             console.error(`Erro encontrado em verify token: ${error.message}`)
-            res.status(401).json({ msg: 'Token invalido' })
+            res.status(401).json({ msg: 'Token invalido ou expirado' })
         }
     } 
 
@@ -31,7 +32,7 @@ class JwtClass {
     userAsign(user){
         console.log(`Secret key in userAsign:  ${this.secretKey}`)
         const returnToken = jwt.sign({ user }, this.secretKey, {
-            expiresIn: '1d' 
+            expiresIn: 300
         });
 
         return {

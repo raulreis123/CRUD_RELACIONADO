@@ -3,7 +3,7 @@ const userCache = new nodeCache();
 
 class CacheMethods{
     async setItem(data){
-        userCache.set('keySession', data, 5);
+        userCache.set('keySession', data, 15);
     }
 
     async getItem(){

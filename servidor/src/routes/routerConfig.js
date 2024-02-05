@@ -5,6 +5,7 @@ const CacheMethods = require('../services/nodeCache');
 const FsModule = require('../services/fs');
 const hashCode = require('../services/hashFunction')
 const JwtClass = require('../middleware/userAuthentication');
+const saveLogs = require('../services/saveLogs')
 
 const SECRET_KEY = '6412180';
 const jwtInstance = new JwtClass(SECRET_KEY);
@@ -36,6 +37,7 @@ router.get('/dados', jwtInstance.verifyToken.bind(JwtClass), async(req,res)=>{
 router.post('/registro', async(req, res)=>{
     const user = req.body;
     await hashCode(user.senha).then(hash=> {user.senha = hash;})
+    saveLogs('cadastro', req)
     
     const response = await crudInstance.cadUser(user); 
     res.status(response.status).send(response.msg)
@@ -49,7 +51,7 @@ router.post('/registro', async(req, res)=>{
  */
 router.post('/login', async(req, res)=>{
     const user = req.body;
-    console.log(user);
+    saveLogs('login', req);
     try {
         const users = await crudInstance.getUsers();
         await hashCode(user.senha).then(hash =>{ user.senha = hash; })
@@ -66,6 +68,7 @@ router.post('/login', async(req, res)=>{
                 let tokenResponse = jwtInstance.userAsign(obj.dataValues.id)
                 if (tokenResponse.success) {
                     res.header('Authorization', `Bearer ${tokenResponse.token}`)
+                    console.log('operação bem sucedida')
                     res.status(200).json({   
                         acess: true,
                         msg: 'Acesso permitido',
@@ -114,6 +117,7 @@ router.delete('/delete', async(req, res)=>{
             });
         }
 
+        saveLogs('delete', req);
         const response = await crudInstance.deleteUser(userId);
 
         if(response.success){
@@ -145,6 +149,8 @@ router.delete('/delete', async(req, res)=>{
  */
 router.post('/sendData', jwtInstance.verifyToken.bind(JwtClass), async(req, res)=>{
     var userData = req.body;
+    console.log('acessada')
+    //saveLogs('sendData', req);
     console.log(`Dados: ${Object.values(userData)}, Token: ${req.headers['authorization']}`)
     cacheInstance.setItem(userData);
     res.status(200).json({msg:'dados enviados'})
