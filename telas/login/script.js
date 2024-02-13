@@ -1,11 +1,13 @@
-let receb;
 var user = {}
+let valid;
 
 const urlGet = 'http://localhost:3000/dados';
 const urlPost = 'http://localhost:3000/sendData';
 const urlLogin = 'http://localhost:3000/login';
 
-async function valid(){
+async function validation(event){
+    event.preventDefault();
+
     let emailV = document.querySelector('#textEmail').value
     let password = document.querySelector('#pass').value;
     let token;
@@ -13,26 +15,30 @@ async function valid(){
         email: emailV,
         senha: password,
     }
-    
+    alert('execução')
     try {
         const response = await axios.post(urlLogin, userSend)
+        alert('execução requisição login')
         console.log(response);
         valid = response.data;
-        receb = response.data.data;
-        token = response.headers['Authorization'];
+        token = response.headers['authorization'];
+        console.log(token)
     } catch (error) {
         alert(`Erro ao receber dados: ${error}`)
+        return;
     }
-
     if( valid.acess ){
         console.log(`Token from Authorization: ${token}`)
         alert(valid.msg);
-        const { id, email, nome } = receb;
+        const { id, email, nome } = valid.data;
         user = { id, email, password, nome };
 
         try {
-            axios.post(urlPost, user, { headers: { 'authorization' : token } });
-            setTimeout(()=>{window.location.href = '../index/index.html';}, 500)
+            await axios.post(urlPost, user, { headers: { 'authorization' : token } });
+            setTimeout(()=>{
+                console.log('Redirecionando...')
+                window.location.href = '../index/index.html';
+            }, 500)
         } catch (error) {
             alert(`Erro no envio de dados: ${error}`);
         }
@@ -41,16 +47,23 @@ async function valid(){
     }
 }
 
-document.addEventListener('DOMContentLoaded', async()=>{
-    const eventClick = document.querySelector('.entrada');
-    const eventEnter = document.querySelector('.txtPass');
 
-    eventClick.addEventListener('click', valid);
-    eventEnter.addEventListener('keypress', async(e)=>{
-        if( e.key == 'Enter' ){
-            await valid();
-        }
-    });
+document.addEventListener('DOMContentLoaded', async()=>{
+    const loginForm = document.querySelector('#formulario');
+
+    loginForm.addEventListener('submit', (event)=>{
+        validation(event);
+    })
+
+    // const eventClick = document.querySelector('.entrada');
+    // const eventEnter = document.querySelector('.txtPass');
+
+    // eventClick.addEventListener('click', validation);
+    // eventEnter.addEventListener('keypress', async(e)=>{
+    //     if( e.key == 'Enter' ){
+    //         await validation(e);
+    //     }
+    // });
 })
 
 function cadRouter(){
@@ -78,15 +91,4 @@ function chbx(){
     } else{
         pass.type = 'password';
     }
-}
-
-async function hashCode(pass){
-    const encoder = new TextEncoder();
-    const stringBit = encoder.encode(pass);
-
-    const hashBuffer = await crypto.subtle.digest('SHA-256', stringBit); //API nativa do navegador
-    const hashConvert = Array.from(new Uint8Array(hashBuffer)) // convertido em hex de 8 bits (0 a 255)
-    const hashHex = hashConvert.map(byte => byte.toString(16).padStart(2, '0')).join(''); //join contatena tudo na mesma string
-
-    return hashHex;
 }
